@@ -1,5 +1,4 @@
+from textblob import TextBlob
 user_input = input()
-import sentistrength
-senti = sentistrength('EN')
-result = senti.get_sentiment(user_input)
-print(result)
+sentence = TextBlob(user_input)
+print(sentence.sentiment)
