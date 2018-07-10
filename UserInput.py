@@ -1,11 +1,13 @@
 from textblob import TextBlob
 import urllib.request, json
 import math
-import itertools
 
 with urllib.request.urlopen("https://api.github.com/repos/apache/hadoop/comments") as url:
     data = json.loads(url.read().decode()) 
     sequenceDict = {}
+    previousday = 0
+    previousmessage = "Hi"
+    combinedlist = []
     for index, elem in enumerate(data):
         sequenceDict[index] = elem
         if 'created_at' in elem:
@@ -21,5 +23,23 @@ with urllib.request.urlopen("https://api.github.com/repos/apache/hadoop/comments
                 sentiments = []
                 sentiments = sentence.sentiment.polarity
                 shortsenti = '%.2f' % sentiments
-                tabledata = [shortdates, messages, shortsenti]
-                print(tabledata)
+                if previousday == shortdates:
+                    combined = previousmessage + ' ' + messages
+                    newsenti = TextBlob(combined)
+                    sentis = []
+                    sentis = newsenti.sentiment.polarity
+                    ssentis = '%.2f' % sentis
+                    tabledata = [shortdates, combined, ssentis]
+                else:
+                    tabledata = [shortdates, messages, shortsenti]
+                if previousday == shortdates:
+                    previousmessage = combined
+                else:
+                    previousmessage = messages
+                previousday = shortdates
+                combinedlist.append(tabledata)
+combinedlist.append(['2100-01-01', 'NaN', 0])
+for i, item in enumerate(range(len(combinedlist) - 1)):
+    if combinedlist[i][0] < combinedlist[i + 1][0]:
+        print(combinedlist[i])
+
