@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- This bootstrap calendar template was created by Neeraj Agarwal of FormGet -->
+<html>
+    <head>
+        <link href='fullcalendar.css' rel='stylesheet' />
+        <link href='fullcalendar.print.css' rel='stylesheet' media='print' />
+        <script src='moment.min.js'></script> 
+        <script src='jquery.min.js'></script>
+        <script src='fullcalendar.min.js'></script>
+        <script>
+            function changeColor() {
+                var alldays = document.querySelectorAll("td");
+                var i;
+                for (i = 0; i < alldays.length; i++) {
+                    if(alldays[i].getAttribute(['data-date']) === "2017-06-07") {
+                        alldays[i].style.backgroundColor = "#f0fff0";
+                    }
+                    else if(alldays[i].getAttribute(['data-date']) === "2017-06-11") {
+                        alldays[i].style.backgroundColor = "#ffcccc";
+                    }
+                }
+            }
+        </script>
+        <script>
+            $(document).ready(function() {
+            $('#calendar').fullCalendar({
+            header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,basicWeek,basicDay'
+            },
+            defaultDate: '2017-06-07',
+            editable: true,
+            eventLimit: true,
+            events: [
+            {
+            title: 'All Day Event',
+            start: '2017-06-07'
+            },
+            {
+            title: 'All Day Event',
+            start: '2017-06-11'
+            }, 
+            {
+            title: 'All Day Event',
+            start: '2017-07-24'
+            }, 
+            ]
+        });
+        });
+        </script>
+        <style>
+            body {
+            margin: 40px 10px;
+            padding: 0;
+            font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+            font-size: 14px;
+            }
+            #calendar {
+            max-width: 900px;
+            margin: 0 auto;
+            }
+        </style>
+    </head>
+    <body onload="changeColor()">
+        <div id='calendar'></div>
+    </body>
+</html>
