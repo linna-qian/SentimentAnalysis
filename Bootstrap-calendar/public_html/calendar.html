@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- This bootstrap calendar template was created by Neeraj Agarwal of FormGet -->
+<!-- This bootstrap calendar template was sourced from Neeraj Agarwal of FormGet -->
 <html>
     <head>
         <link href='fullcalendar.css' rel='stylesheet' />
@@ -13,12 +13,31 @@
                 var i;
                 for (i = 0; i < alldays.length; i++) {
                     if(alldays[i].getAttribute(['data-date']) === "2017-06-07") {
-                        alldays[i].style.backgroundColor = "#f0fff0";
+                        alldays[i].style.backgroundColor = "#ccffcc";
                     }
                     else if(alldays[i].getAttribute(['data-date']) === "2017-06-11") {
+                        alldays[i].style.backgroundColor = "#f0fff0";
+                    }
+                    else if(alldays[i].getAttribute(['data-date']) === "2017-07-24") {
+                        alldays[i].style.backgroundColor = "#ccffcc";
+                    }
+                    else if(alldays[i].getAttribute(['data-date']) === "2017-07-25") {
                         alldays[i].style.backgroundColor = "#ffcccc";
                     }
                 }
+            }
+            function addSentiment() {
+                var events = document.querySelectorAll("span");
+                var i;
+                for(i = 0; i < events.length; i++) {
+                    if(events[i].textContent === "All Day Event") {
+                        events[i].textContent = "😭"
+                    }
+                }
+            }
+            function changeCalendar() {
+                changeColor();
+                addSentiment();
             }
         </script>
         <script>
@@ -29,18 +48,10 @@
             center: 'title',
             right: 'month,basicWeek,basicDay'
             },
-            defaultDate: '2017-06-07',
+            defaultDate: '2017-07-7',
             editable: true,
             eventLimit: true,
             events: [
-            {
-            title: 'All Day Event',
-            start: '2017-06-07'
-            },
-            {
-            title: 'All Day Event',
-            start: '2017-06-11'
-            }, 
             {
             title: 'All Day Event',
             start: '2017-07-24'
@@ -62,7 +73,7 @@
             }
         </style>
     </head>
-    <body onload="changeColor()">
+    <body onload="changeCalendar()">
         <div id='calendar'></div>
     </body>
 </html>
