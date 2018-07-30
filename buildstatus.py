@@ -5,16 +5,14 @@ def print_information(inputrepo):
     with urllib.request.urlopen("https://api.github.com/repos/mtedone/podam/commits") as url:
         data = json.loads(url.read().decode()) 
         sequenceDict = {}
+        information = []
         for index, elem in enumerate(data):
             sequenceDict[index] = elem
             if 'sha' in elem:
-                commithash = []
                 commithash = elem['sha']
                 if 'commit' in elem:
-                    commit = []
                     commit = elem['commit']
                     if 'message' in commit:
-                        message = []
                         message = commit['message']
                         sentence = TextBlob(message)
                         sentiments = []
@@ -27,13 +25,21 @@ def print_information(inputrepo):
                             for num, item in enumerate(data2):
                                 sequenceDict2[num] = item
                                 if 'created_at' in item:
-                                    dates = []
                                     dates = item['created_at'] 
                                     shortdates = dates[:10]
                                     if 'state' in item:
-                                        statuses = []
                                         statuses = item['state']
-                                        print([shortdates, commithash, shortsenti, statuses])
+                                        info = {
+                                            'date': shortdates,
+                                            'sha': commithash,
+                                            'sentiment': shortsenti,
+                                            'status': statuses,
+                                        }
+                                        information.append(info.copy())
+    output = {"commits": information}
+    with open('data.json', 'w') as fp:
+        json.dump(output, fp, sort_keys=True, indent=4)
+                                    
 
 print("What is the repository name?")
 inputrepo = input()
